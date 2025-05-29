@@ -170,11 +170,11 @@ export const ProjectsSection = () => {
         <div className="text-center mt-12">
           <a
             className="cosmic-button inline-flex items-center gap-2"
-            href="https://github.com/machadop1407"
+            href="#contact"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Check My GitHub <ArrowRight size={16} />
+            Contact Me <ArrowRight size={16} />
           </a>
         </div>
       </div>

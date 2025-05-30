@@ -1,0 +1,21 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="400"
+  height="150"
+  viewBox="0 0 400 150"
+  role="img"
+  aria-label="GSAP Text"
+>
+  <text
+    x="50%"
+    y="50%"
+    text-anchor="middle"
+    alignment-baseline="central"
+    font-family="Arial, sans-serif"
+    font-size="120"
+    font-weight="bold"
+    fill="#88CE02"
+  >
+    GSAP
+  </text>
+</svg>

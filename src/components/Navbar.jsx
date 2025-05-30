@@ -113,7 +113,7 @@ export const Navbar = () => {
               onClick={toggleTheme}
               className="mt-8 text-foreground hover:text-primary transition-colors duration-300"
             >
-              {isDarkMode ? "Light" : "Dark"}
+             
               {isDarkMode ? "☀️" : "🌙"}
             </button>
           </div>

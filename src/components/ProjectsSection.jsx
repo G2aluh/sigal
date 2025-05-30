@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
   ExternalLink,
-  Camera,
   Globe,
-  Code as CodeIcon,
   Download as DownloadIconLucide,
   Github,
-  DollarSign,
+  MessageCircle,
 } from "lucide-react";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Map tag names to SVG icons (place your SVGs in public/icons/)
 const tagIcons = {
@@ -60,6 +59,156 @@ const projects = [
     icons: { preview: ExternalLink, liveDemo: Globe },
   },
 ];
+
+// Initialize Gemini API
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+// Chatbot Component
+const Chatbot = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { sender: "bot", text: "Halo Teman Saya Adalah Bot Yang Diciptakan Oleh Galuh!" },
+  ]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const handleSendMessage = async () => {
+    if (!input.trim()) return;
+
+    // Add user message
+    setMessages((prev) => [...prev, { sender: "user", text: input }]);
+    setIsLoading(true);
+
+    // Process response
+    const lowerInput = input.toLowerCase().trim();
+    let botResponse = "Hmm, that's an interesting question! For more details, check the Contact section.";
+
+    // Predefined responses
+    if (["halo", "hai", "hi", "woi", "p", ].includes(lowerInput)) {
+      botResponse = "Halo saya adalah Galuh Saputra apakah ada yang ingin kamu tanyakan tentang aku? misalnya hobiku? apa yang aku sukai? bebas tanya saja sesukamu!";
+    } else if (
+      lowerInput.includes("who created") ||
+      lowerInput.includes("dibuat") ||
+      lowerInput.includes("pembuat website") ||
+      lowerInput.includes("siapa yang membuat")
+    ) {
+      botResponse = "Website ini dibuat oleh Galuh Saputra, seorang web developer yang suka dengan React, Tailwind, dan Figma!";
+    } else if (
+      lowerInput.includes("apa hobi galuh") || 
+      lowerInput.includes("hobi galuh") 
+    ) {
+      botResponse = "Hobi Galuh adalah bermain Game, Coding, dan Desain. Ia juga suka belajar teknologi baru!";
+    }
+
+    else if (
+      lowerInput.includes("siapa galuh") ||
+      lowerInput.includes("who") ||
+      lowerInput.includes("dia")
+    ) {
+      botResponse = "Galuh adalah pria tampan dan pemberani dari Jawa!";
+    }
+
+    
+
+    else {
+      // Use Gemini API for random questions with language adaptation
+      try {
+        const result = await model.generateContent(
+          `Respond to the following question or statement in the same language as the input. Keep the tone friendly and professional, and provide a concise answer suitable for a portfolio website chatbot. If the question is unrelated to the portfolio, suggest contacting the owner for more details. Input: "${input}"`
+        );
+        const response = await result.response;
+        botResponse = response.text();
+      } catch (error) {
+        console.error("Gemini API error:", error);
+        botResponse = lowerInput.includes("indonesia") || lowerInput.includes("siapa")
+          ? "Maaf, saya tidak bisa memproses pertanyaan itu. Coba lagi atau hubungi pemilik website!"
+          : "Sorry, I couldn't process that question. Please try again or contact the owner!";
+      }
+    }
+
+    // Add bot response
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+      setIsLoading(false);
+    }, 500);
+
+    setInput("");
+  };
+
+  // Scroll to perspective
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  return (
+    <div className="fixed bottom-5 right-5 z-50">
+      {/* Chatbot Toggle Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center justify-center h-12 w-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors duration-300"
+        title="Chat with me"
+      >
+        <MessageCircle size={24} />
+      </button>
+
+      {/* Chatbot Window */}
+      {isOpen && (
+        <div className="mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-primary text-white p-3 flex justify-between items-center">
+            <span className="font-semibold">Portfolio Assistant</span>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white hover:text-gray-200"
+            >
+              ✕
+            </button>
+          </div>
+          <div className="h-64 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-900">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`mb-3 flex ${
+                  msg.sender === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div
+                  className={`max-w-[70%] rounded-lg p-2 ${
+                    msg.sender === "user"
+                      ? "bg-primary text-white dark:bg-blue-500 dark:text-white"
+                      : "bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start mb-3">
+                <div className="bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100 rounded-lg p-2 shadow">
+                  Thinking...
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+          <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+              className="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Type a message..."
+              disabled={isLoading}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const ProjectsSection = () => {
   const [activePreview, setActivePreview] = useState(null);
@@ -229,9 +378,12 @@ export const ProjectsSection = () => {
           role="alert"
           className="fixed bottom-5 right-5 bg-red-800 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in z-50"
         >
-          Can&apos;t be downloaded. You can contact the owner for more and download the file
+          🚧 Cant be downloaded. You can contact the owner for more and download the file
         </div>
       )}
+
+      {/* Chatbot */}
+      <Chatbot />
     </section>
   );
 };

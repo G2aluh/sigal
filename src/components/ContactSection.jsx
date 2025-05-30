@@ -2,7 +2,6 @@ import {
   Instagram,
   Linkedin,
   Mail,
-  MapPin,
   Phone,
   Send,
   Twitch,
@@ -53,8 +52,8 @@ export const ContactSection = () => {
                 <div className="p-3 rounded-full bg-primary/10">
                   <Mail className="h-6 w-6 text-primary" />{" "}
                 </div>
-                <div>
-                  <h4 className="font-medium"> Email</h4>
+                <div className="mt-2">
+                  
                   <a
                     href="mailto:hello@gmail.com"
                     className="text-muted-foreground hover:text-primary transition-colors"
@@ -67,8 +66,8 @@ export const ContactSection = () => {
                 <div className="p-3 rounded-full bg-primary/10">
                   <Phone className="h-6 w-6 text-primary" />{" "}
                 </div>
-                <div>
-                  <h4 className="font-medium"> Phone</h4>
+                <div className="mt-2">
+                 
                   <a
                     href="tel:+11234567890"
                     className="text-muted-foreground hover:text-primary transition-colors"
@@ -78,20 +77,13 @@ export const ContactSection = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-full bg-primary/10">
-                  <MapPin className="h-6 w-6 text-primary" />{" "}
-                </div>
-                <div>
-                  <h4 className="font-medium"> Location</h4>
-                  <a className="text-muted-foreground hover:text-primary transition-colors">
-                    Olak-Alen, Selorejo, Blitar, Indonesia
-                  </a>
-                </div>
+              
+              
               </div>
             </div>
 
-            <div className="pt-8">
-              <h4 className="font-medium mb-4"> Connect With Me</h4>
+            <div className="pt-2">
+              <h4 className="font-medium mb-4">  Follow Me</h4>
               <div className="flex space-x-4 justify-center">
                
              

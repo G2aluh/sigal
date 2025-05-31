@@ -11,7 +11,7 @@ const Chatbot = () => {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Halo Teman, Saya Adalah Rima alias Bot Yang Diciptakan Oleh Galuh! Jika ada yang ingin kamu tanyakan tentang Galuh, silakan tanya saja!",
+      text: "Halo Teman Saya Adalah Bot Yang Diciptakan Oleh Galuh!",
       timestamp: new Date(),
     },
   ]);
@@ -49,7 +49,7 @@ const Chatbot = () => {
     const lowerInput = input.toLowerCase().trim();
     let botResponse = "Hmm, itu pertanyaan menarik! Untuk detail lebih lanjut, cek bagian Kontak.";
 
-    // Respons yang telah ditentukan (terkait portofolio)
+    // Respons yang telah ditentukan
     if (["halo", "hai", "hi", "woi", "p"].includes(lowerInput)) {
       botResponse = "Halo saya adalah bot yang dirancang untuk menjawab pertanyaan tentang Galuh Saputra apakah ada yang ingin kamu tanyakan tentang dia? misalnya, apa hobi dia? atau siapa galuh sebenarnya? bebas tanya saja sesukamu!";
     } else if (
@@ -58,33 +58,24 @@ const Chatbot = () => {
       lowerInput.includes("pembuat website") ||
       lowerInput.includes("siapa yang membuat")
     ) {
-      botResponse = "Website ini dibuat oleh orang dengan username instagram: @2.shinnra. Jika ada yang ingin di tanyakan atau ingin lebih dekat bisa follow instagram tersebut!";
+      botResponse = "Website ini dibuat oleh orang dengan username instagram: 2.shinnra. Jika ada yang ingin di tanyakan atau ingin lebih dekat bisa follow instagram tersebut!";
     } else if (
       lowerInput.includes("apa hobi galuh") ||
       lowerInput.includes("hobi galuh") ||
-      lowerInput.includes("hobi") ||
       lowerInput.includes("hobi dia")
     ) {
-      botResponse = "Hobi Galuh adalah bermain Game, Coding, dan Desain. ";
+      botResponse = "Hobi Galuh adalah bermain Game, Coding, dan Desain. Ia juga suka belajar teknologi baru!";
     } else if (
       lowerInput.includes("siapa galuh") ||
       lowerInput.includes("who") ||
       lowerInput.includes("dia")
     ) {
       botResponse = "Galuh Saputra adalah seorang pelajar jurusan RPL di SMK Brantas Karangkates. Ia memiliki minat besar dalam pengembangan tampilan web dan desain grafis";
-    } 
-     else if (
-      lowerInput.includes("nomor wa") ||
-      lowerInput.includes("nomor") ||
-      lowerInput.includes("wa") ||
-      lowerInput.includes("whatsapp")
-    ) {
-      botResponse = "+62 852-3659-5907 itu adalah nomor WhatsApp Galuh. Kamu bisa menghubungi dia untuk pertanyaan lebih lanjut!";
-    }else {
+    } else {
       // Pertanyaan di luar topik portofolio, gunakan Gemini API untuk jawaban umum
       try {
         const result = await model.generateContent(
-          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten Galuh bernama rima yang ber tujuan membantu untuk menjelajahi dan menjelaskan portofolio. jangan ada jawaban array []. jika ada yang bertanya tentang download jawab untuk download pada website tidak bisa dan harus menghubungi Galuh langsung. jika ada yang tanya live demo jawab untuk live demo bisa langsung di coba. Jika ada yang bertanya instagram atau ig jawab @2.shinnra. Jika ada yang tanya nomor wa whatsapp jawab +6285236595907 Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
+          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten umum. Jika pertanyaan terlalu luas atau tidak jelas, sarankan untuk menghubungi pemilik situs untuk informasi lebih lanjut. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
         );
         const response = await result.response;
         botResponse = response.text();
@@ -138,6 +129,23 @@ const Chatbot = () => {
     <div className="fixed bottom-5 right-5 z-50">
       <style>
         {`
+          @keyframes pulse-glow {
+            0% {
+              box-shadow: 0 0 10px rgb(100, 100, 200);
+            }
+            50% {
+              box-shadow: 0 0 20px rgba(120, 120, 300), 0 0 30px rgba(100, 100, 200);
+            }
+            100% {
+              box-shadow: 0 0 10px rgba(100, 100, 200);
+            }
+          }
+          .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+          }
+          .dark .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+          }
           @keyframes glow {
             0% {
               background-position: 0% 50%;
@@ -172,7 +180,7 @@ const Chatbot = () => {
       {/* Tombol Toggle Chatbot */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center h-12 w-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors duration-300"
+        className="flex items-center justify-center h-12 w-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-colors duration-300 pulse-glow"
         title="Chat dengan saya"
       >
         <MessageCircle size={24} />
@@ -182,7 +190,7 @@ const Chatbot = () => {
       {isOpen && (
         <div className="mt-2 w-90 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
           <div className="bg-primary text-white p-3 flex justify-between items-center">
-            <span className="font-semibold">Rima (Bot)</span>
+            <span className="font-semibold">Asisten Portofolio</span>
             <div className="flex items-center gap-2">
               <select
                 value={timeZone}
@@ -234,7 +242,7 @@ const Chatbot = () => {
             )}
             <div ref={messagesEndRef} />
           </div>
-          <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+ tatto           <div className="p-3 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
             <input
               type="text"
               value={input}

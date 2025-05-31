@@ -38,7 +38,7 @@ const Chatbot = () => {
     if (["halo", "hai", "hi", "woi", "p"].includes(lowerInput)) {
       botResponse = "Halo saya adalah Galuh Saputra apakah ada yang ingin kamu tanyakan tentang aku? misalnya hobiku? apa yang aku sukai? bebas tanya saja sesukamu!";
     } else if (
-      lowerInput.includes("who created") ||
+      lowerInput.includes(["siapa pemilik situs ini", "pemilik", "situs"]) ||
       lowerInput.includes("dibuat") ||
       lowerInput.includes("pembuat website") ||
       lowerInput.includes("siapa yang membuat")

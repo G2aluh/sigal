@@ -76,6 +76,7 @@ const Chatbot = () => {
      else if (
       lowerInput.includes("nomor wa") ||
       lowerInput.includes("nomor") ||
+      lowerInput.includes("wa") ||
       lowerInput.includes("whatsapp")
     ) {
       botResponse = "+62 852-3659-5907 itu adalah nomor WhatsApp Galuh. Kamu bisa menghubungi dia untuk pertanyaan lebih lanjut!";
@@ -83,7 +84,7 @@ const Chatbot = () => {
       // Pertanyaan di luar topik portofolio, gunakan Gemini API untuk jawaban umum
       try {
         const result = await model.generateContent(
-          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten Galuh bernama rima yang ber tujuan membantu untuk menjelajahi dan menjelaskan portofolio. jangan ada jawaban array []. jika ada yang bertanya tentang download jawab untuk download pada website tidak bisa dan harus menghubungi Galuh langsung. jika ada yang tanya live demo jawab untuk live demo bisa langsung di coba. Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
+          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten Galuh bernama rima yang ber tujuan membantu untuk menjelajahi dan menjelaskan portofolio. jangan ada jawaban array []. jika ada yang bertanya tentang download jawab untuk download pada website tidak bisa dan harus menghubungi Galuh langsung. jika ada yang tanya live demo jawab untuk live demo bisa langsung di coba. Jika ada yang bertanya instagram atau ig jawab @2.shinnra. Jika ada yang tanya nomor wa whatsapp jawab +6285236595907 Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
         );
         const response = await result.response;
         botResponse = response.text();

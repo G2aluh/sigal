@@ -83,7 +83,7 @@ const Chatbot = () => {
       // Pertanyaan di luar topik portofolio, gunakan Gemini API untuk jawaban umum
       try {
         const result = await model.generateContent(
-          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten Galuh bernama rima yang ber tujuan membantu untuk menjelajahi dan menjelaskan portofolio. untuk download pada website tidak bisa dan harus menghubungi Galuh langsung. untuk live demo bisa. Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
+          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten Galuh bernama rima yang ber tujuan membantu untuk menjelajahi dan menjelaskan portofolio. jangan ada jawaban array [].  untuk download pada website tidak bisa dan harus menghubungi Galuh langsung. untuk live demo bisa. Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
         );
         const response = await result.response;
         botResponse = response.text();
@@ -181,7 +181,7 @@ const Chatbot = () => {
       {isOpen && (
         <div className="mt-2 w-90 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
           <div className="bg-primary text-white p-3 flex justify-between items-center">
-            <span className="font-semibold">Asisten Portofolio</span>
+            <span className="font-semibold">Rima (Bot)</span>
             <div className="flex items-center gap-2">
               <select
                 value={timeZone}

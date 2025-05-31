@@ -4,21 +4,36 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Inisialisasi Gemini API
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Halo Teman Saya Adalah Bot Yang Diciptakan Oleh Galuh!",
+      text: "Halo Teman, Saya Adalah Bot Yang Diciptakan Oleh Galuh! Jika ada yang ingin kamu tanyakan tentang Galuh, silakan tanya saja!",
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingTime, setLoadingTime] = useState(0); // State untuk waktu dalam milidetik
   const [timeZone, setTimeZone] = useState("Asia/Jakarta"); // Default ke WIB
   const messagesEndRef = useRef(null);
+
+  // Menghitung waktu (milidetik) saat isLoading aktif
+  useEffect(() => {
+    let timer;
+    if (isLoading) {
+      const startTime = Date.now();
+      timer = setInterval(() => {
+        setLoadingTime(Date.now() - startTime);
+      }, 100); // Update setiap 100ms untuk animasi halus
+    } else {
+      setLoadingTime(0); // Reset waktu saat loading selesai
+    }
+    return () => clearInterval(timer); // Bersihkan interval saat komponen unmount atau isLoading berubah
+  }, [isLoading]);
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -34,19 +49,20 @@ const Chatbot = () => {
     const lowerInput = input.toLowerCase().trim();
     let botResponse = "Hmm, itu pertanyaan menarik! Untuk detail lebih lanjut, cek bagian Kontak.";
 
-    // Respons yang telah ditentukan
+    // Respons yang telah ditentukan (terkait portofolio)
     if (["halo", "hai", "hi", "woi", "p"].includes(lowerInput)) {
-      botResponse = "Halo saya adalah Galuh Saputra apakah ada yang ingin kamu tanyakan tentang aku? misalnya hobiku? apa yang aku sukai? bebas tanya saja sesukamu!";
+      botResponse = "Halo saya adalah bot yang dirancang untuk menjawab pertanyaan tentang Galuh Saputra apakah ada yang ingin kamu tanyakan tentang dia? misalnya, apa hobi dia? atau siapa galuh sebenarnya? bebas tanya saja sesukamu!";
     } else if (
       lowerInput.includes("siapa pemilik situs") ||
       lowerInput.includes("dibuat") ||
       lowerInput.includes("pembuat website") ||
       lowerInput.includes("siapa yang membuat")
     ) {
-      botResponse = "Website ini dibuat oleh orang dengan ig: 2.shinnra. Jangan lupa untuk follow ya aku tunggu notifikasinya!";
+      botResponse = "Website ini dibuat oleh orang dengan username instagram: 2.shinnra. Jika ada yang ingin di tanyakan atau ingin lebih dekat bisa follow instagram tersebut!";
     } else if (
       lowerInput.includes("apa hobi galuh") ||
-      lowerInput.includes("hobi galuh")
+      lowerInput.includes("hobi galuh") ||
+      lowerInput.includes("hobi dia")
     ) {
       botResponse = "Hobi Galuh adalah bermain Game, Coding, dan Desain. Ia juga suka belajar teknologi baru!";
     } else if (
@@ -54,12 +70,12 @@ const Chatbot = () => {
       lowerInput.includes("who") ||
       lowerInput.includes("dia")
     ) {
-      botResponse = "Galuh adalah pria tampan dan pemberani dari Jawa!";
+      botResponse = "Galuh Saputra adalah seorang pelajar jurusan RPL di SMK Brantas Karangkates. Ia memiliki minat besar dalam pengembangan tampilan web dan desain grafis";
     } else {
-      // Gunakan Gemini API untuk pertanyaan acak dengan adaptasi bahasa
+      // Pertanyaan di luar topik portofolio, gunakan Gemini API untuk jawaban umum
       try {
         const result = await model.generateContent(
-          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Pertahankan nada yang ramah dan profesional, serta berikan jawaban singkat yang cocok untuk chatbot situs portofolio. Jika pertanyaannya tidak terkait portofolio, sarankan untuk menghubungi pemilik situs untuk detail lebih lanjut. Input: "${input}"`
+          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten galuh. Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
         );
         const response = await result.response;
         botResponse = response.text();
@@ -102,8 +118,48 @@ const Chatbot = () => {
     ).format(date);
   };
 
+  // Format waktu loading ke detik dan milidetik
+  const formatLoadingTime = (ms) => {
+    const seconds = Math.floor(ms / 1000);
+    const milliseconds = Math.floor((ms % 1000) / 100); // Ambil 1 digit milidetik
+    return `${seconds}.${milliseconds}s`;
+  };
+
   return (
     <div className="fixed bottom-5 right-5 z-50">
+      <style>
+        {`
+          @keyframes glow {
+            0% {
+              background-position: 0% 50%;
+            }
+            100% {
+              background-position: 200% 50%;
+            }
+          }
+          .glow-effect {
+            background: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.1) 0%,
+              rgba(255, 255, 255, 0.8) 50%,
+              rgba(255, 255, 255, 0.1) 100%
+            );
+            background-size: 200% auto;
+            animation: glow 1.5s linear infinite;
+          }
+          .dark .glow-effect {
+            background: linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.1) 0%,
+              rgba(255, 255, 255, 0.4) 50%,
+              rgba(255, 255, 255, 0.1) 100%
+            );
+            background-size: 200% auto;
+            animation: glow 1.5s linear infinite;
+          }
+        `}
+      </style>
+
       {/* Tombol Toggle Chatbot */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -115,7 +171,7 @@ const Chatbot = () => {
 
       {/* Jendela Chatbot */}
       {isOpen && (
-        <div className="mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+        <div className="mt-2 w-90 bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
           <div className="bg-primary text-white p-3 flex justify-between items-center">
             <span className="font-semibold">Asisten Portofolio</span>
             <div className="flex items-center gap-2">
@@ -135,7 +191,7 @@ const Chatbot = () => {
               </button>
             </div>
           </div>
-          <div className="h-64 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-900">
+          <div className="h-72 overflow-y-auto p-4 bg-gray-100 dark:bg-gray-900">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -144,7 +200,7 @@ const Chatbot = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[70%] rounded-lg p-2 text-left ${
+                  className={`max-w-[90%] rounded-lg p-2 text-left ${
                     msg.sender === "user"
                       ? "bg-primary text-white dark:bg-blue-500 dark:text-white"
                       : "bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100"
@@ -159,8 +215,8 @@ const Chatbot = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start mb-3">
-                <div className="bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100 rounded-lg p-2 shadow text-left">
-                  <p>Sedang berpikir...</p>
+                <div className="bg-white text-gray-800 dark:bg-gray-700 dark:text-gray-100 rounded-lg p-2 shadow text-left glow-effect">
+                  <p>Sedang berpikir... ({formatLoadingTime(loadingTime)})</p>
                   <p className="text-xs mt-1 opacity-70">
                     {formatTimestamp(new Date())}
                   </p>

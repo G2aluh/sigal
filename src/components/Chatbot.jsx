@@ -11,7 +11,7 @@ const Chatbot = () => {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Halo Teman, Saya Adalah Bot Yang Diciptakan Oleh Galuh! Jika ada yang ingin kamu tanyakan tentang Galuh, silakan tanya saja!",
+      text: "Halo Teman, Saya Adalah Rima alias Bot Yang Diciptakan Oleh Galuh! Jika ada yang ingin kamu tanyakan tentang Galuh, silakan tanya saja!",
       timestamp: new Date(),
     },
   ]);
@@ -58,24 +58,32 @@ const Chatbot = () => {
       lowerInput.includes("pembuat website") ||
       lowerInput.includes("siapa yang membuat")
     ) {
-      botResponse = "Website ini dibuat oleh orang dengan username instagram: 2.shinnra. Jika ada yang ingin di tanyakan atau ingin lebih dekat bisa follow instagram tersebut!";
+      botResponse = "Website ini dibuat oleh orang dengan username instagram: @2.shinnra. Jika ada yang ingin di tanyakan atau ingin lebih dekat bisa follow instagram tersebut!";
     } else if (
       lowerInput.includes("apa hobi galuh") ||
       lowerInput.includes("hobi galuh") ||
+      lowerInput.includes("hobi") ||
       lowerInput.includes("hobi dia")
     ) {
-      botResponse = "Hobi Galuh adalah bermain Game, Coding, dan Desain. Ia juga suka belajar teknologi baru!";
+      botResponse = "Hobi Galuh adalah bermain Game, Coding, dan Desain. ";
     } else if (
       lowerInput.includes("siapa galuh") ||
       lowerInput.includes("who") ||
       lowerInput.includes("dia")
     ) {
       botResponse = "Galuh Saputra adalah seorang pelajar jurusan RPL di SMK Brantas Karangkates. Ia memiliki minat besar dalam pengembangan tampilan web dan desain grafis";
-    } else {
+    } 
+     else if (
+      lowerInput.includes("nomor wa") ||
+      lowerInput.includes("nomor") ||
+      lowerInput.includes("whatsapp")
+    ) {
+      botResponse = "+62 852-3659-5907 itu adalah nomor WhatsApp Galuh. Kamu bisa menghubungi dia untuk pertanyaan lebih lanjut!";
+    }else {
       // Pertanyaan di luar topik portofolio, gunakan Gemini API untuk jawaban umum
       try {
         const result = await model.generateContent(
-          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten galuh. Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
+          `Tanggapi pertanyaan atau pernyataan berikut dalam bahasa yang sama dengan input. Berikan jawaban yang ramah, singkat, dan informatif sebagai asisten Galuh bernama rima yang ber tujuan membantu untuk menjelajahi dan menjelaskan portofolio. untuk download pada website tidak bisa dan harus menghubungi Galuh langsung. untuk live demo bisa. Jika pertanyaan terlalu luas atau tidak jelas, berikan arahan untuk mencari di sumber lain. Jangan sebutkan bahwa kamu menggunakan API eksternal. Input: "${input}"`
         );
         const response = await result.response;
         botResponse = response.text();

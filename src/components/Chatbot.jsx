@@ -38,12 +38,12 @@ const Chatbot = () => {
     if (["halo", "hai", "hi", "woi", "p"].includes(lowerInput)) {
       botResponse = "Halo saya adalah Galuh Saputra apakah ada yang ingin kamu tanyakan tentang aku? misalnya hobiku? apa yang aku sukai? bebas tanya saja sesukamu!";
     } else if (
-      lowerInput.includes(["siapa pemilik situs ini", "pemilik", "situs"]) ||
+      lowerInput.includes("siapa pemilik situs") ||
       lowerInput.includes("dibuat") ||
       lowerInput.includes("pembuat website") ||
       lowerInput.includes("siapa yang membuat")
     ) {
-      botResponse = "Website ini dibuat oleh Galuh Saputra, seorang web developer yang suka dengan React, Tailwind, dan Figma!";
+      botResponse = "Website ini dibuat oleh orang dengan ig: 2.shinnra. Jangan lupa untuk follow ya aku tunggu notifikasinya!";
     } else if (
       lowerInput.includes("apa hobi galuh") ||
       lowerInput.includes("hobi galuh")

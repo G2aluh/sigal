@@ -91,7 +91,7 @@ const Chatbot = () => {
       } catch (error) {
         console.error("Kesalahan Gemini API:", error);
         botResponse = lowerInput.includes("indonesia") || lowerInput.includes("siapa")
-          ? "Maaf, saya tidak bisa memproses pertanyaan itu. Coba lagi atau hubungi pemilik website!"
+          ? "Adu-du-duh Rima sedang butuh istirahat.. Tunggu sebentar ya!"
           : "Sorry, I couldn't process that question. Please try again or contact the owner!";
       }
     }

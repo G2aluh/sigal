@@ -7,6 +7,8 @@ import {
   Code as CodeIcon,
   Download as DownloadIconLucide,
   Github,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 // Map tag names to SVG icons (place your SVGs in public/icons/)
@@ -28,7 +30,7 @@ const projects = [
     id: 1,
     title: "Paquito Thumbnail",
     description: "YouTube Thumbnail.",
-    image: "/projects/paquito.jpg",
+    images: ["/projects/paquito.jpg"],
     tags: ["Figma"],
     icons: { preview: ExternalLink, download: DownloadIconLucide },
   },
@@ -36,7 +38,7 @@ const projects = [
     id: 2,
     title: "Business Man",
     description: "Wallpaper for Desktop Display.",
-    image: "/projects/workyboys.jpg",
+    images: ["/projects/workyboys.jpg"],
     tags: ["Figma"],
     icons: { preview: ExternalLink, download: DownloadIconLucide },
   },
@@ -44,7 +46,7 @@ const projects = [
     id: 3,
     title: "Money Rain",
     description: "Wallpaper for Desktop Display.",
-    image: "/projects/money3.jpg",
+    images: ["/projects/money3.jpg"],
     tags: ["Figma"],
     icons: { preview: ExternalLink, download: DownloadIconLucide },
   },
@@ -52,7 +54,7 @@ const projects = [
     id: 4,
     title: "Modern Portfolio",
     description: "Portfolio with Arknights theme.",
-    image: "/projects/porto1.png",
+    images: ["/projects/porto1.png"],
     tags: ["React", "Tailwind", "Gsap"],
     previewUrl: "https://shin2.vercel.app",
     githubUrl: "https://github.com/G2aluh/shin2",
@@ -62,7 +64,7 @@ const projects = [
     id: 5,
     title: "Baca",
     description: "Place for read a news.",
-    image: "/projects/baca.png",
+    images: ["/projects/baca.png"],
     tags: ["Laravel", "Supabase"],
     icons: { preview: ExternalLink, liveDemo: Globe },
   },
@@ -70,14 +72,23 @@ const projects = [
     id: 6,
     title: "Strong Man",
     description: "Youtube Thumbnail.",
-    image: "/projects/moge.jpg",
+    images: ["/projects/moge.jpg", "/projects/moge2.jpg"],
     tags: ["Figma"],
     icons: { preview: ExternalLink, liveDemo: Globe },
+  },
+  {
+    id: 7,
+    title: "AI Amazing",
+    description: "UI/UX Design about AI Tools.",
+    images: ["/projects/landing.png", "/projects/fitur.png", "/projects/rate.png", "/projects/trial.png", "/projects/Footer.png"],
+    tags: ["Figma"],
+    icons: { preview: ExternalLink},
   },
 ];
 
 export const ProjectsSection = () => {
   const [activePreview, setActivePreview] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [toast, setToast] = useState(null);
   const [isExiting, setIsExiting] = useState(false);
   const [activeTab, setActiveTab] = useState("All");
@@ -128,6 +139,25 @@ export const ProjectsSection = () => {
     }
     return true;
   });
+
+  // Handle image navigation
+  const handleNextImage = () => {
+    if (activePreview) {
+      const project = projects.find((p) => p.images.includes(activePreview));
+      const totalImages = project.images.length;
+      setCurrentImageIndex((prev) => (prev + 1) % totalImages);
+      setActivePreview(project.images[(currentImageIndex + 1) % totalImages]);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (activePreview) {
+      const project = projects.find((p) => p.images.includes(activePreview));
+      const totalImages = project.images.length;
+      setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
+      setActivePreview(project.images[(currentImageIndex - 1 + totalImages) % totalImages]);
+    }
+  };
 
   return (
     <section id="projects" className="py-24 px-4 relative">
@@ -197,7 +227,7 @@ export const ProjectsSection = () => {
             >
               <div className="h-48 overflow-hidden">
                 <img
-                  src={project.image}
+                  src={project.images[0]} // Display first image as thumbnail
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-500"
                 />
@@ -233,7 +263,10 @@ export const ProjectsSection = () => {
                 <div className="mt-auto flex space-x-1">
                   {project.icons.preview && (
                     <button
-                      onClick={() => setActivePreview(project.image)}
+                      onClick={() => {
+                        setActivePreview(project.images[0]);
+                        setCurrentImageIndex(0);
+                      }}
                       className="flex items-center justify-center h-8 w-8 text-foreground/80 hover:text-primary bg-secondary/50 rounded transition-colors duration-300 relative group"
                       title="Preview"
                     >
@@ -303,20 +336,42 @@ export const ProjectsSection = () => {
         </div>
       </div>
 
-      {/* Preview Modal */}
+    {/* Preview Modal */}
       {activePreview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
             className="absolute inset-0 backdrop-blur-sm"
-            onClick={() => setActivePreview(null)}
+            onClick={() => {
+              setActivePreview(null);
+              setCurrentImageIndex(0);
+            }}
           />
           <div className="relative rounded-lg max-w-4xl w-full mx-4 shadow-lg overflow-hidden bg-gray-200/80 backdrop-filter backdrop-blur-md">
-            <div className="p-4">
+            <div className="relative p-4">
               <img
                 src={activePreview}
                 alt="Preview"
                 className="w-full h-auto rounded-md shadow-xl"
               />
+              {/* Navigation Buttons */}
+              {projects.find((p) => p.images.includes(activePreview)).images.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevImage}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors"
+                    title="Previous Image"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button
+                    onClick={handleNextImage}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-colors"
+                    title="Next Image"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

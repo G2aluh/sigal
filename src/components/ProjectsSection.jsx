@@ -84,6 +84,30 @@ const projects = [
     tags: ["Figma"],
     icons: { preview: ExternalLink},
   },
+  {
+    id: 8,
+    title: "Mario",
+    description: "Landing page Mario.",
+    images: ["/projects/Mario.jpg"],
+    tags: ["Figma"],
+    icons: { preview: ExternalLink},
+  },
+  {
+    id: 9,
+    title: "Anime Website",
+    description: "UI design for someone who want to watch anime.",
+    images: ["/projects/Landing Anime.jpg"],
+    tags: ["Figma"],
+    icons: { preview: ExternalLink},
+  },
+  {
+    id: 10,
+    title: "Thumbnail Livestream",
+    description: "Design thumbnail for livestream Mobile Legends.",
+    images: ["/projects/Livetream.jpg"],
+    tags: ["Figma"],
+    icons: { preview: ExternalLink},
+  },
 ];
 
 export const ProjectsSection = () => {

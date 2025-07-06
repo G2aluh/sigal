@@ -87,7 +87,7 @@ export const ContactSection = () => {
               <div className="flex space-x-4 justify-center">
                
              
-                <a href="#" target="_blank">
+                <a href="https://www.instagram.com/2.shinnra?igsh=b3I0NGF2ZnVtbG43" target="_blank">
                   <Instagram />
                 </a>
                  

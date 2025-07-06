@@ -90,7 +90,7 @@ const projects = [
     description: "Landing page Mario.",
     images: ["/projects/Mario.jpg"],
     tags: ["Figma"],
-    icons: { preview: ExternalLink},
+    icons: { preview: ExternalLink, download: DownloadIconLucide},
   },
   {
     id: 9,
@@ -98,7 +98,7 @@ const projects = [
     description: "UI design for someone who want to watch anime.",
     images: ["/projects/Landing Anime.jpg"],
     tags: ["Figma"],
-    icons: { preview: ExternalLink},
+    icons: { preview: ExternalLink, download: DownloadIconLucide},
   },
   {
     id: 10,
@@ -106,7 +106,7 @@ const projects = [
     description: "Design thumbnail for livestream Mobile Legends.",
     images: ["/projects/Livetream.jpg"],
     tags: ["Figma"],
-    icons: { preview: ExternalLink},
+    icons: { preview: ExternalLink, download: DownloadIconLucide},
   },
 ];
 
@@ -370,7 +370,7 @@ export const ProjectsSection = () => {
               setCurrentImageIndex(0);
             }}
           />
-          <div className="relative rounded-lg max-w-4xl w-full mx-4 shadow-lg overflow-hidden bg-gray-200/80 backdrop-filter backdrop-blur-md">
+          <div className="relative rounded-lg max-w-4xl w-full mx-4 shadow-lg overflow-hidden bg-gray-300/80 backdrop-filter backdrop-blur-md">
             <div className="relative p-4">
               <img
                 src={activePreview}

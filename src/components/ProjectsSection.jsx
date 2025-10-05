@@ -371,12 +371,12 @@ export const ProjectsSection = () => {
               setCurrentImageIndex(0);
             }}
           />
-          <div className="relative rounded-lg max-w-4xl w-full mx-4 shadow-lg overflow-hidden bg-gray-300/80 backdrop-filter backdrop-blur-md">
+          <div className="relative rounded-lg shadow-lg overflow-hidden bg-gray-300/80 backdrop-blur-md w-max max-w-[95vw]">
             <div className="relative p-4">
               <img
                 src={activePreview}
                 alt="Preview"
-                className="w-full h-auto rounded-md shadow-xl"
+                className="max-h-[90vh] w-auto object-contain rounded-md shadow-xl"
               />
               {/* Navigation Buttons */}
               {projects.find((p) => p.images.includes(activePreview)).images.length > 1 && (

@@ -67,9 +67,9 @@ export const Navbar = () => {
   }, [active]);
 
   return (
-    <nav className="fixed z-10 top-0 left-0 w-full">
+    <nav className="fixed top-0 left-0 w-full">
       {/* === Desktop Sidebar === */}
-      <aside className="hidden md:flex flex-col justify-center h-screen w-52 px-6 bg-transparent pointer-events-none">
+      <aside className="hidden md:flex flex-col justify-center h-screen w-52 px-6 bg-transparent ">
         <ul className="space-y-6 pointer-events-auto">
           {navItems.map((item) => (
             <li key={item.name} className="relative flex items-center">

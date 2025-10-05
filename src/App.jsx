@@ -8,10 +8,11 @@ import Navbar from "./components/Navbar";
 function App() {
   return (
     <>
-    <Navbar/> 
+  
       <Chatbot/>
       <Toaster />
       <BrowserRouter>
+      <Navbar/> 
         <Routes>
 
           <Route index element={<Home />} />

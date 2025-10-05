@@ -11,7 +11,7 @@ const translations = {
       skills: "Keterampilan",
       projects: "Proyek",
       contact: "Kontak",
-      portfolio: "Portofolio Saya",
+      
       language: "Bahasa",
       indonesian: "Indonesia",
       english: "Inggris",
@@ -36,7 +36,7 @@ const translations = {
       skills: "Skills",
       projects: "Projects",
       contact: "Contact",
-      portfolio: "My Portfolio",
+      
       language: "Language",
       indonesian: "Indonesian",
       english: "English",

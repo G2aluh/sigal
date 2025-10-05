@@ -70,9 +70,9 @@ const projects = [
   },
   {
     id: 6,
-    title: "Strong Man",
+    title: "Banner ",
     description: "Youtube Thumbnail.",
-    images: ["/projects/moge.jpg", "/projects/moge2.jpg"],
+    images: ["/projects/Marvell.jpg"],
     tags: ["Figma"],
     icons: { preview: ExternalLink, liveDemo: Globe },
   },
@@ -108,6 +108,14 @@ const projects = [
     tags: ["Figma"],
     icons: { preview: ExternalLink, download: DownloadIconLucide},
   },
+  {
+    id: 11,
+    title: "Course Flutter Flame",
+    description: "Duplication from coding studio promotion",
+    images: ["/projects/Flutter Flame Final.jpg"],
+    tags: ["Figma"],
+    icons: { preview: ExternalLink, download: DownloadIconLucide},
+  },
 ];
 
 export const ProjectsSection = () => {
@@ -115,7 +123,7 @@ export const ProjectsSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [toast, setToast] = useState(null);
   const [isExiting, setIsExiting] = useState(false);
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState("Design");
 
   useEffect(() => {
     document.body.style.overflow = activePreview ? "hidden" : "";
@@ -350,14 +358,7 @@ export const ProjectsSection = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <a
-            className="cosmic-button inline-flex items-center gap-2"
-            href="#contact"
-          >
-            Contact Me <ArrowRight size={16} />
-          </a>
-        </div>
+     
       </div>
 
     {/* Preview Modal */}

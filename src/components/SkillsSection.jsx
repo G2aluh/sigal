@@ -36,7 +36,7 @@ const skills = [
 const categories = ["all", "frontend", "backend", "design", "tools"];
 
 export const SkillsSection = () => {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState("design");
   const filteredSkills = skills.filter(
     (skill) => activeCategory === "all" || skill.category === activeCategory
   );
@@ -55,9 +55,9 @@ export const SkillsSection = () => {
               key={category}
               onClick={() => setActiveCategory(category)}
               className={cn(
-                "px-5 py-2 rounded-full transition-colors duration-300 capitalize",
+                "px-5 py-2 rounded-md hover:text-primary cursor-pointer transition-colors duration-300 capitalize",
                 activeCategory === category
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-primary text-primary-foreground hover:text-white"
                   : "bg-secondary/70 text-foreground hover:bg-secondary"
               )}
             >
